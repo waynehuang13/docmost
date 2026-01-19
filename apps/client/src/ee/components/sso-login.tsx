@@ -12,7 +12,8 @@ import { LdapLoginModal } from "@/ee/components/ldap-login-modal.tsx";
 export default function SsoLogin() {
   const { data, isLoading } = useWorkspacePublicDataQuery();
   const [ldapModalOpened, setLdapModalOpened] = useState(false);
-  const [selectedLdapProvider, setSelectedLdapProvider] = useState<IAuthProvider | null>(null);
+  const [selectedLdapProvider, setSelectedLdapProvider] =
+    useState<IAuthProvider | null>(null);
 
   if (!data?.authProviders || data?.authProviders?.length === 0) {
     return null;
@@ -57,28 +58,27 @@ export default function SsoLogin() {
         />
       )}
 
-      {(isCloud() || data.hasLicenseKey) && (
-        <>
-          <Stack align="stretch" justify="center" gap="sm">
-            {data.authProviders.map((provider) => (
-              <div key={provider.id}>
-                <Button
-                  onClick={() => handleSsoLogin(provider)}
-                  leftSection={getProviderIcon(provider)}
-                  variant="default"
-                  fullWidth
-                >
-                  {provider.name}
-                </Button>
-              </div>
-            ))}
-          </Stack>
+      {/* License check bypassed - always show SSO providers */}
+      <>
+        <Stack align="stretch" justify="center" gap="sm">
+          {data.authProviders.map((provider) => (
+            <div key={provider.id}>
+              <Button
+                onClick={() => handleSsoLogin(provider)}
+                leftSection={getProviderIcon(provider)}
+                variant="default"
+                fullWidth
+              >
+                {provider.name}
+              </Button>
+            </div>
+          ))}
+        </Stack>
 
-          {!data.enforceSso && (
-            <Divider my="xs" label="OR" labelPosition="center" />
-          )}
-        </>
-      )}
+        {!data.enforceSso && (
+          <Divider my="xs" label="OR" labelPosition="center" />
+        )}
+      </>
     </>
   );
 }

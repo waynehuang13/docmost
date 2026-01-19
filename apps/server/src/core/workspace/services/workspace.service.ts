@@ -68,6 +68,8 @@ export class WorkspaceService {
   }
 
   async getWorkspacePublicData(workspaceId: string) {
+    console.log('Getting workspace public data for workspace ID:', workspaceId);
+
     const workspace = await this.db
       .selectFrom('workspaces')
       .select(['id', 'name', 'logo', 'hostname', 'enforceSso', 'licenseKey'])
@@ -90,6 +92,12 @@ export class WorkspaceService {
     if (!workspace) {
       throw new NotFoundException('Workspace not found');
     }
+
+    console.log('Found workspace with auth providers:', {
+      workspaceId: workspace.id,
+      authProvidersCount: workspace.authProviders?.length || 0,
+      authProviders: workspace.authProviders,
+    });
 
     const { licenseKey, ...rest } = workspace;
 
