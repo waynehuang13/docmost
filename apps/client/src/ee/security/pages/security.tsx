@@ -42,14 +42,13 @@ export default function Security() {
         Single sign-on (SSO)
       </Title>
 
-      {(isCloud() && isBusiness) || (!isCloud() && hasLicenseKey) ? (
-        <>
-          <EnforceSso />
-          <Divider my="lg" />
-          <CreateSsoProvider />
-          <Divider size={0} my="lg" />
-        </>
-      ) : null}
+      {/* License check bypassed - always show SSO options */}
+      <>
+        <EnforceSso />
+        <Divider my="lg" />
+        <CreateSsoProvider />
+        <Divider size={0} my="lg" />
+      </>
 
       <SsoProviderList />
     </>
